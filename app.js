@@ -10,63 +10,8 @@ var bodyParser = require("body-parser");
 var session = require("express-session");
 const hbs = require("hbs");
 
-// Use Passport with OpenId Connect strategy to
-// authenticate users with OneLogin
-var passport = require("passport");
-var OneLoginStrategy = require("passport-openidconnect").Strategy;
-
-var login = require("./routes/login");
 var users = require("./routes/users");
 var home = require("./routes/home");
-
-//  acr_values: 'onelogin:nist:level:1:re-auth'
-
-// Configure the OpenId Connect Strategy
-// with credentials obtained from OneLogin
-passport.use(
-  new OneLoginStrategy(
-    {
-      issuer: process.env.OIDC_BASE_URI,
-      clientID: process.env.OIDC_CLIENT_ID,
-      clientSecret: process.env.OIDC_CLIENT_SECRET,
-      authorizationURL: `${process.env.OIDC_BASE_URI}/auth`,
-      userInfoURL: `${process.env.OIDC_BASE_URI}/me`,
-      tokenURL: `${process.env.OIDC_BASE_URI}/token`,
-      callbackURL: process.env.OIDC_REDIRECT_URI,
-      passReqToCallback: true
-    },
-    function(
-      req,
-      issuer,
-      userId,
-      profile,
-      accessToken,
-      refreshToken,
-      params,
-      cb
-    ) {
-      console.log("issuer:", issuer);
-      console.log("userId:", userId);
-      console.log("accessToken:", accessToken);
-      console.log("refreshToken:", refreshToken);
-      console.log("params:", params);
-      console.log("access_token", params.access_token);
-      access_token = params.access_token;
-      req.session.accessToken = accessToken;
-      req.session.access_token = params.access_token;
-
-      return cb(null, profile);
-    }
-  )
-);
-
-passport.serializeUser(function(user, done) {
-  done(null, user);
-});
-
-passport.deserializeUser(function(obj, done) {
-  done(null, obj);
-});
 
 var app = express();
 // view engine, partials, and views setup
@@ -91,66 +36,10 @@ app.use(
   })
 );
 
-// Initialize Passport
-app.use(passport.initialize());
-app.use(passport.session());
-
-// Middleware for checking if a user has been authenticated
-// via Passport and OneLogin OpenId Connect
-function checkAuthentication(req, res, next) {
-  if (req.isAuthenticated()) {
-    next();
-  } else {
-    res.redirect("/");
-  }
-}
-
-app.use("/", login);
+app.use("/", home);
 // Only allow authenticated users to access the /home route
-app.use("/home", checkAuthentication, home);
-app.use("/users", checkAuthentication, users);
-
-// Initiates an authentication request with OneLogin
-// The user will be redirect to OneLogin and once authenticated
-// they will be returned to the callback handler below
-app.get(
-  "/login",
-  passport.authenticate("openidconnect", {
-    successReturnToOrRedirect: "/",
-    scope: "profile"
-  })
-);
-
-// Callback handler that OneLogin will redirect back to
-// after successfully authenticating the user
-app.get(
-  "/oauth/callback",
-  passport.authenticate("openidconnect", {
-    callback: true,
-    successReturnToOrRedirect: "/home",
-    failureRedirect: "/"
-  })
-);
-
-// Destroy both the local session and
-// revoke the access_token at OneLogin
-app.get("/logout", function(req, res) {
-  request.post(
-    `${process.env.OIDC_BASE_URI}/token/revocation`,
-    {
-      form: {
-        client_id: process.env.OIDC_CLIENT_ID,
-        client_secret: process.env.OIDC_CLIENT_SECRET,
-        token: req.session.access_token,
-        token_type_hint: "access_token"
-      }
-    },
-    function(err, respose, body) {
-      console.log("Session Revoked at OneLogin");
-      res.redirect("/");
-    }
-  );
-});
+app.use("/home", home);
+app.use("/users", users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

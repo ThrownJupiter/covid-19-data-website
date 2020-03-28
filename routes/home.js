@@ -10,7 +10,6 @@ var router = express.Router();
 router.get("/", function(req, res, next) {
   res.render("home", {
     title: "COVID-19 - Per County",
-    username: req.user.displayName,
     whichRegion: function() {
       return "content.county.all";
     },
