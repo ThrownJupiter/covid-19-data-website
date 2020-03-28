@@ -37,35 +37,31 @@
             <div id="content">
                 {{>topbar username=username}}
                 {{> (whichRegion)}}
+                {{>footer}}
+                <!-- Scroll to Top Button-->
+                <a class="scroll-to-top rounded" href="#page-top">
+                    <i class="fas fa-angle-up"></i>
+                </a>
+
             </div>
-            <!-- End of Content Wrapper -->
         </div>
-    </div>
-    {{>footer}}
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+        <!-- End of Page Wrapper -->
+        {{>logoutModal}}
+        <!-- Core plugin JavaScript-->
 
+        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+        <!-- Page level plugins -->
+        <script src="/js/vendor/bootstrap.min.js"></script>
 
-    </div>
-    <!-- End of Page Wrapper -->
-    {{>logoutModal}}
-    <!-- Core plugin JavaScript-->
-
-    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-    <!-- Page level plugins -->
-    <script src="/js/vendor/bootstrap.min.js"></script>
-
-    <!-- Amazon Javascript Files -->
-    <script src="/js/vendor/aws-sdk.min.js"></script>
-    <script src="/js/vendor/aws-cognito-sdk.min.js"></script>
-    <script src="/js/vendor/amazon-cognito-identity.min.js"></script>
-    <script src="/js/vendor/amazon-cognito-auth.min.js"></script>
-    {{> (whichJS)}}
+        <!-- Amazon Javascript Files -->
+        <script src="/js/vendor/aws-sdk.min.js"></script>
+        <script src="/js/vendor/aws-cognito-sdk.min.js"></script>
+        <script src="/js/vendor/amazon-cognito-identity.min.js"></script>
+        <script src="/js/vendor/amazon-cognito-auth.min.js"></script>
+        {{> (whichJS)}}
 </body>
 
 </html>

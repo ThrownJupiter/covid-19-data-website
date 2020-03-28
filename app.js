@@ -17,7 +17,7 @@ var OneLoginStrategy = require("passport-openidconnect").Strategy;
 
 var login = require("./routes/login");
 var users = require("./routes/users");
-var mep = require("./routes/mep");
+var home = require("./routes/home");
 
 //  acr_values: 'onelogin:nist:level:1:re-auth'
 
@@ -107,7 +107,7 @@ function checkAuthentication(req, res, next) {
 
 app.use("/", login);
 // Only allow authenticated users to access the /home route
-app.use("/MEP", checkAuthentication, mep);
+app.use("/home", checkAuthentication, home);
 app.use("/users", checkAuthentication, users);
 
 // Initiates an authentication request with OneLogin
@@ -127,7 +127,7 @@ app.get(
   "/oauth/callback",
   passport.authenticate("openidconnect", {
     callback: true,
-    successReturnToOrRedirect: "/MEP",
+    successReturnToOrRedirect: "/home",
     failureRedirect: "/"
   })
 );

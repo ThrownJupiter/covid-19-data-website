@@ -1,14 +1,12 @@
 <!-- Sidebar -->
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion sidenav toggled" id="accordionSidebar">
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center"
-        href="https://customerinformation.dsicloud.com/">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/home">
         <div class="sidebar-brand-icon">
-            <img src="img/dsi-cloud-logo.png" />
-            <!--<i class="fas fa-laugh-wink"></i>-->
+            <img src="img/covid-19.png" width=50 height=50 />
         </div>
         <div class="sidebar-brand-text mx-2 mt-2">
-            DSI Customer Information
+            COVID-19 Information
         </div>
     </a>
     <!-- Divider -->
@@ -16,23 +14,9 @@
     <div class="sidebar-heading">
         All
     </div>
-    {{>sidebar.mep.all}}
-    <!-- MEP Heading -->
-    <div class="sidebar-heading">MEP</div>
-    {{>sidebar.mep.na1}}
-    {{>sidebar.mep.na2}}
-    {{>sidebar.mep.na3}}
-    {{>sidebar.mep.au}}
-    {{>sidebar.mep.sg}}
-    {{>sidebar.mep.ie}}
+    {{>sidebar.county.all}}
+
     <!-- Divider -->
-    <hr class="sidebar-divider" />
-    <div class="sidebar-heading">EPP</div>
-    {{>sidebar.epp}}
-    <!-- Divider -->
-    <hr class="sidebar-divider" />
-    <div class="sidebar-heading">CloudInv</div>
-    {{>sidebar.cloudinventory}}
     <hr class="sidebar-divider" />
     <!-- Admin Heading -->
     <div class="sidebar-heading">
