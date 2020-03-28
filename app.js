@@ -9,7 +9,6 @@ var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
 var session = require("express-session");
 const hbs = require("hbs");
-
 var users = require("./routes/users");
 var home = require("./routes/home");
 
